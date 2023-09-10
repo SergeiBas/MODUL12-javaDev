@@ -10,9 +10,12 @@ import java.util.Map;
 @Service
 public class CRUDNoteService {
     private Map<Long, NoteEntity> notes;
+    private Long nextId;
 
     public CRUDNoteService() {
-        notes = new HashMap<>();
+        notes = new HashMap<>(Map.of(
+                1L, new NoteEntity(1L, "Title", "Text")));
+        nextId = (long) notes.size();
     }
 
     public List<NoteEntity> listAll() {
@@ -20,13 +23,17 @@ public class CRUDNoteService {
     }
 
     public NoteEntity add(NoteEntity note) {
-        notes.put(note.getId(), note);
+        nextId++;
+        note.setId(nextId);
+        notes.put(nextId, note);
         return note;
     }
 
     public void deleteById(Long id) {
         if (notes.remove(id) == null) {
             throw new RuntimeException("Note with id = " + id + " doesn't exist!");
+        } else {
+            notes.remove(id);
         }
     }
 
