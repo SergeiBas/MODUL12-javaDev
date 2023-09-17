@@ -1,4 +1,4 @@
-package goit.MODUL12javaDev;
+package goit.MODUL12javaDev.entities;
 
 import java.util.concurrent.ThreadLocalRandom;
 

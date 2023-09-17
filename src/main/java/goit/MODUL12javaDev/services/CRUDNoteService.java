@@ -1,5 +1,6 @@
-package goit.MODUL12javaDev;
+package goit.MODUL12javaDev.services;
 
+import goit.MODUL12javaDev.entities.NoteEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
