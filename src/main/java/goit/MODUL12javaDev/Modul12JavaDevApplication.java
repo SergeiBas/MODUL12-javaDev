@@ -9,6 +9,5 @@ public class Modul12JavaDevApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Modul12JavaDevApplication.class, args);
-		CRUDNoteService crudNoteService = new CRUDNoteService();
 	}
 }

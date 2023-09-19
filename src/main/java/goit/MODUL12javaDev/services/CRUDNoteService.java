@@ -1,46 +1,43 @@
 package goit.MODUL12javaDev.services;
 
 import goit.MODUL12javaDev.entities.NoteEntity;
+import goit.MODUL12javaDev.reposetories.INoteRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CRUDNoteService {
-    private Map<Long, NoteEntity> notes;
 
-    public CRUDNoteService() {
-        notes = new HashMap<>();
+    private final INoteRepository noteRepository;
+
+    public NoteEntity createNote(NoteEntity note) {
+        return noteRepository.save(note);
     }
 
-    public List<NoteEntity> listAll() {
-        return notes.values().stream().toList();
-    }
-
-    public NoteEntity add(NoteEntity note) {
-        notes.put(note.getId(), note);
-        return note;
+    public Optional<NoteEntity> readById(Long id) {
+        return noteRepository.findById(id);
     }
 
     public void deleteById(Long id) {
-        if (notes.remove(id) == null) {
-            throw new RuntimeException("Note with id = " + id + " doesn't exist!");
-        }
+        noteRepository.deleteById(id);
     }
 
-    public void update(NoteEntity note) {
-        if (notes.containsKey(note.getId())) {
-            NoteEntity currentNote = notes.get(note);
-            currentNote.setTitle(note.getTitle());
-            currentNote.setContent(note.getContent());
-        } else {
-            throw new RuntimeException("Note with id = " + note.getId() + " doesn`t exist!");
-        }
+    public void updateById(NoteEntity note) {
+        NoteEntity currentNote = noteRepository.findById(note.getId()).get();
+        currentNote.setTitle(note.getTitle());
+        currentNote.setContent(note.getContent());
+        noteRepository.save(currentNote);
     }
 
-    public NoteEntity getById(Long id) {
-        return notes.get(id);
+
+    public List<NoteEntity> getAllNotes() {
+        List<NoteEntity> notes = new ArrayList<>();
+        noteRepository.findAll().forEach(note -> notes.add(note));
+        return notes;
     }
 }
