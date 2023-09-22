@@ -18,7 +18,7 @@ public class NoteController {
 
     @GetMapping(value = "/list")
     public ModelAndView getListOfNotes() {
-        ModelAndView model = new ModelAndView("notes/main-page");
+        ModelAndView model = new ModelAndView("notes/index");
         model.addObject("notes", noteService.getAllNotes());
         return model;
     }
@@ -31,7 +31,7 @@ public class NoteController {
 
     @GetMapping(value = "/edit")
     public ModelAndView editNote(@RequestParam("id") Long id) {
-        ModelAndView edit = new ModelAndView("notes/editing-page");
+        ModelAndView edit = new ModelAndView("notes/editing-note");
         NoteEntity note = noteService.readById(id).get();
         edit.addObject("note", note);
         return edit;
@@ -46,7 +46,7 @@ public class NoteController {
 
     @GetMapping(value = "/create")
     public String createNote() {
-        return "notes/creating-new-node-page";
+        return "notes/creating-note";
     }
 
     @PostMapping(path = "/create")
