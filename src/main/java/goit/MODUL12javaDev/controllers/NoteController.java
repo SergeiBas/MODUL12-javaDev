@@ -19,7 +19,7 @@ public class NoteController {
     @GetMapping(value = "/list")
     public ModelAndView getListOfNotes() {
         ModelAndView model = new ModelAndView("notes/index");
-        model.addObject("notes", noteService.listAll());
+        model.addObject("notes", noteService.getAllNotes());
         return model;
     }
 
@@ -32,14 +32,15 @@ public class NoteController {
     @GetMapping(value = "/edit")
     public ModelAndView editNote(@RequestParam("id") Long id) {
         ModelAndView edit = new ModelAndView("notes/editing-note");
-        NoteEntity byId = noteService.getById(id);
-        edit.addObject("note", byId);
+        NoteEntity note = noteService.readById(id).get();
+        edit.addObject("note", note);
         return edit;
     }
 
     @PostMapping(path = "/edit")
     public String updateNote(@ModelAttribute("note") NoteEntity updateNote) {
-        noteService.update(updateNote);
+        noteService.updateById(updateNote);
+        System.out.println(noteService.getAllNotes());
         return "redirect:/note/list";
     }
 
@@ -50,7 +51,7 @@ public class NoteController {
 
     @PostMapping(path = "/create")
     public String updateListOfNodes(@ModelAttribute("note") NoteEntity newNote) {
-        noteService.add(newNote);
+        noteService.createNote(newNote);
         return "redirect:/note/list";
     }
 }
