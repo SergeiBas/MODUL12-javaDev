@@ -1,7 +1,6 @@
 package goit.MODUL12javaDev.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Setter
@@ -11,15 +10,15 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 public class NoteEntity {
-    @Getter
+
     @Id
+    @Column(name = "note_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String title;
 
+    @Column
     private String content;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
