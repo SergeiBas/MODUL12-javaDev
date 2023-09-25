@@ -3,12 +3,13 @@ package goit.MODUL12javaDev.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Setter
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "note")
 public class NoteEntity {
 
     @Id
@@ -21,4 +22,5 @@ public class NoteEntity {
 
     @Column
     private String content;
+
 }
